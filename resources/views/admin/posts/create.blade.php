@@ -11,7 +11,7 @@
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">title</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                         @error('title')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -23,7 +23,9 @@
                     <div class="mb-3 row">
                         <label for="content" class="col-sm-2 col-form-label">content</label>
                         <div class="col-sm-10">
-                        <textarea class="form-control" id="content" name="content"></textarea>
+                        <textarea class="form-control" id="content" name="content">
+                            {{ old('content') }}
+                        </textarea>
                         @error('content')
                             <div class="alert alert-danger">
                                 {{ $message }}
