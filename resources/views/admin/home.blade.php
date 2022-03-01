@@ -19,5 +19,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <h1>
+                    Welcome {{ Auth::user()->name }} - {{ Auth::user()->userInfo()->first()->phone }}
+            </h1>
+        </div>
+    </div>
 </div>
 @endsection

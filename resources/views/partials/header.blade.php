@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         @guest
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-        @if (Route::has('register'))
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-        @endif
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            @if (Route::has('register'))
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            @endif
         @else
             <a class="nav-link" href="{{ route('logout') }}"
             onclick="event.preventDefault();
