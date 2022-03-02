@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -39,29 +40,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-        ]);
-
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
 
-        $slug = Str::slug($data['title'], '-');
-        $postSlug = Post::where('slug', $slug)->first();
+        $postValidate = $request->validate(
+            [
+                'title' => 'required|max:240',
+                'content' => 'required'
+            ]
+        );
 
-        $counter = 0;
-        while ($postSlug) {
-            $slug = $slug . '-' . $counter;
-            $postSlug = Post::where('slug', $slug)->first();
-            $counter++;
-        }
 
-        $newPost = new Post();
-        $newPost->fill($data);
-        $newPost->slug = $slug;
-        $newPost->save();
+        $post = new Post();
+        $post->fill($data);
+        $post->slug = $post->createSlug($data['title']);
+        $post->save();
 
-        return redirect()->route('admin.posts.show', ['post' => $newPost]);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -83,7 +78,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        dd($post);
+        return view('admin.posts.edit', ['post' => $post]);
     }
 
     /**
@@ -93,9 +88,29 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+
+
+        $postValidate = $request->validate(
+            [
+                'title' => 'required|max:240',
+                'content' => 'required'
+            ]
+        );
+
+        if ($data['title'] != $post->title) {
+            $post->title = $data['title'];
+            $post->slug = $post->createSlug($data['title']);
+        }
+        if ($data['content'] != $post->content) {
+            $post->content = $data['title'];
+        }
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post);
     }
 
     /**

@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1>crea un nuovo post</h1>
+        <h1>modifica {{$post->title}}</h1>
         <div class="row">
             <div class="col">
-                <form action="{{ route('admin.posts.store') }}" method="POST">
+                <form action="{{ route('admin.posts.update', $post) }}" method="post">
                     @csrf
-                    @method('POST')
+                    @method('PATCH')
 
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">title</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $post->title) }}">
                         @error('title')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -25,7 +25,7 @@
                         <label for="content" class="col-sm-2 col-form-label">content</label>
                         <div class="col-sm-10">
                         <textarea class="form-control" id="content" name="content">
-                            {{ old('content') }}
+                            {{ old('content', $post->content) }}
                         </textarea>
                         @error('content')
                             <div class="alert alert-danger">
