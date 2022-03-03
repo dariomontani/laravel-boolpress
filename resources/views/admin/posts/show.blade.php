@@ -11,9 +11,12 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1>
-                    {{ $post->title }}
-                </h1>
+                <h1> {{ $post->title }} </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5> Category: {{ $post->category()->first()->name }} </h5>
             </div>
         </div>
         <div class="row">

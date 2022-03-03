@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 
 use App\Model\Post;
 use App\Http\Controllers\Controller;
+use App\Model\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -46,7 +48,8 @@ class PostController extends Controller
         $postValidate = $request->validate(
             [
                 'title' => 'required|max:240',
-                'content' => 'required'
+                'content' => 'required',
+                'category_id' => 'exists:App\Model\Category,id'
             ]
         );
 
@@ -78,7 +81,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', ['post' => $post]);
+        $categories = Category::all();
+
+        return view('admin.posts.edit', ['post' => $post, 'catogories' => $categories]);
     }
 
     /**
@@ -105,7 +110,10 @@ class PostController extends Controller
             $post->slug = $post->createSlug($data['title']);
         }
         if ($data['content'] != $post->content) {
-            $post->content = $data['title'];
+            $post->content = $data['content'];
+        }
+        if ($data['category_id'] != $post->category_id) {
+            $post->category_id = $data['category_id'];
         }
 
         $post->update($data);

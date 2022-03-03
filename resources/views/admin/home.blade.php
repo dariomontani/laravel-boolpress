@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col">
             <h1>
-                    Welcome {{ Auth::user()->name }} - {{ Auth::user()->userInfo()->first()->phone }}
+                    Welcome {{ Auth::user()->name }}
             </h1>
         </div>
     </div>
