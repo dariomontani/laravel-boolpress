@@ -26,6 +26,35 @@
                         @enderror
                     </div>
 
+                    <fieldset>
+                        <legend>Tags</legend>
+                        @if ($errors->any())
+                            @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{$tag->id}}" name="tags[]" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{$tag->name}}
+                                </label>
+                            </div>
+                            @endforeach
+                        @else
+                            @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{$tag->id}}" name="tags[]" {{ $post->tags()->get()->contains($tag->id) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{$tag->name}}
+                                </label>
+                            </div>
+                            @endforeach
+                        @endif
+                            
+                    </fieldset>
+                    @error('tags.*')
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">title</label>
                         <div class="col-sm-10">
