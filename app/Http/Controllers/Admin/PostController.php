@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 
 use App\Model\Post;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Tag;
@@ -53,8 +54,14 @@ class PostController extends Controller
                 'content' => 'required',
                 'category_id' => 'exists:App\Model\Category,id',
                 'tags.*' => 'exists:App\Model\Tag,id',
+                'image' => 'nullable|image',
             ]
         );
+
+        if (!empty($data['image_path'])) {
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
 
 
         $post = new Post();

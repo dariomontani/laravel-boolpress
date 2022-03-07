@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="container">
-        <h1>crea un nuovo post</h1>
+        <h1>Create new post</h1>
         <div class="row">
             <div class="col">
-                <form action="{{ route('admin.posts.store') }}" method="POST">
+                <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="mb-3">
                         <select class="form-select" name="category_id">
-                            <option value="">seleziona la categoria</option>
+                            <option value="">category</option>
                             @foreach ($categories as $category)
 
                                 <option @if (old('category_id') == $category->id) selected @endif value="{{ $category->id }}">
@@ -67,6 +67,11 @@
                             </div>
                         @enderror
                         </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
                     </div>
 
                     <input class="btn btn-primary" type="submit" value="salva">

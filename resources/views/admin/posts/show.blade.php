@@ -23,6 +23,9 @@
             <div class="col">
                 {{ $post->content }}
             </div>
+            <div>
+                <img src="{{ asset('storage/' . $post->image)}}" alt="">
+            </div>
         </div>
     </div>
 @endsection
