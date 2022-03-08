@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.welcome');
 })->name('guest.index');
 
 Auth::routes();
@@ -28,3 +28,7 @@ Route::middleware('auth')
             ->name('home');
         Route::resource('posts', 'PostController');
     });
+
+Route::get('{any?}', function ($name = null) {
+    return view('guest.welcome');
+})->where('any', '.*');
