@@ -46,6 +46,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        // dd($data);
         $data['user_id'] = Auth::user()->id;
 
         $postValidate = $request->validate(
@@ -58,7 +59,7 @@ class PostController extends Controller
             ]
         );
 
-        if (!empty($data['image_path'])) {
+        if (!empty($data['image'])) {
             $img_path = Storage::put('uploads', $data['image']);
             $data['image'] = $img_path;
         }
