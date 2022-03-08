@@ -26,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <img src="{{ asset('storage/' . $post->image)}}" alt="">
+                <img src="{{ asset('storage/' . $post->image)}}" alt="{{ $post->title }}">
             </div>
         </div>
     </div>

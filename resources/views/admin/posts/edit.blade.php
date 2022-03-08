@@ -5,7 +5,7 @@
         <h1>modifica {{$post->title}}</h1>
         <div class="row">
             <div class="col">
-                <form action="{{ route('admin.posts.update', $post) }}" method="post">
+                <form action="{{ route('admin.posts.update', $post) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
