@@ -1,15 +1,21 @@
 <template>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col" v-for="(post, index) in posts">
+      <div class="col" v-for="(post, index) in posts" :key="index">
         <div class="card">
-          <img :src="'/storage/'+post.image" :alt="post.title">
+          <img :src="'/storage/' + post.image" :alt="post.title">
           <div class="card-body">
             <h5 class="card-title">{{post.name}}</h5>
             <p class="card-text">{{post.content}}</p>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row mt-3 bg-light">
+      <ul class="list-inline bg-light">
+        <li class="list-inline-item"> <button v-if="prev_page_url" class="btn btn-info" @click="changePage('prev_page_url')">Prev</button></li>
+        <li class="list-inline-item"> <button v-if="next_page_url" class="btn btn-info" @click="changePage('next_page_url')">Next</button></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -20,15 +26,33 @@ import Axios from "axios";
     name: "Main",
     data(){
       return{
-        products: [],
+        posts: null,
+        next_page_url: null,
+        prev_page_url: null,
       }
     },
-    created(){
-      Axios.get('http://127.0.0.1:8000/api/posts').then(
-        (result) => {
-          this.posts = result.data.results.posts;
+    created() {
+      this.getPosts('http://127.0.0.1:8000/api/posts')
+    },
+
+    methods: {
+      changePage(vs) {
+        let url = this[vs];
+        console.log(url)
+        if(url) {
+          this.getProducts(url);
         }
-      );
+      },
+      getProducts(url){
+        Axios.get(url).then(
+          (result) => {
+            this.posts = result.data.results.posts;
+            this.next_page_url = result.data.results.next_page_url;
+            this.prev_page_url = result.data.results.prev_page_url;
+            console.log(this.next_page_url);
+            console.log(this.prev_page_url);
+          });
+      }
     }
   }
 </script>
@@ -36,3 +60,4 @@ import Axios from "axios";
 <style lang="scss">
 
 </style>
+
