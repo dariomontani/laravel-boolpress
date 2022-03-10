@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(8);
 
         return response()->json([
             'response' => true,
@@ -20,11 +20,16 @@ class PostController extends Controller
 
     public function inRandomOrder()
     {
-        $posts = Post::inRandomOrder()->limit(5)->get();
+        $posts = Post::inRandomOrder()->limit(4)->get();
 
         return response()->json([
             'response' => true,
             'results' =>  ['posts' => $posts],
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $data = $request->all();
     }
 }

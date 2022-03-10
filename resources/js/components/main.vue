@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col" v-for="(post, index) in posts" :key="index">
+      <div class="col" v-for="(post, index) in cards.posts" :key="index">
         <div class="card">
           <img :src="'/storage/' + post.image" :alt="post.title">
           <div class="card-body">
@@ -13,8 +13,8 @@
     </div>
     <div class="row mt-3 bg-light">
       <ul class="list-inline bg-light">
-        <li class="list-inline-item"> <button v-if="prev_page_url" class="btn btn-info" @click="changePage('prev_page_url')">Prev</button></li>
-        <li class="list-inline-item"> <button v-if="next_page_url" class="btn btn-info" @click="changePage('next_page_url')">Next</button></li>
+        <li class="list-inline-item"> <button v-if="cards.prev_page_url" class="btn btn-info" @click="changePage('prev_page_url')">Prev</button></li>
+        <li class="list-inline-item"> <button v-if="cards.next_page_url" class="btn btn-info" @click="changePage('next_page_url')">Next</button></li>
       </ul>
     </div>
   </div>
@@ -24,37 +24,13 @@
 import Axios from "axios";
   export default {
     name: "Main",
-    data(){
-      return{
-        posts: null,
-        next_page_url: null,
-        prev_page_url: null,
+    props: ['cards'],
+    methods:
+    {
+      changePage(vs){
+        this.$emit('changePage', vs);
       }
-    },
-
-    
-    methods: {
-      changePage(vs) {
-        let url = this[vs];
-        console.log(url)
-        if(url) {
-          this.getPosts(url);
-        }
-      },
-      getPosts(url){
-        Axios.get(url).then(
-          (result) => {
-            this.posts = result.data.results.posts;
-            this.next_page_url = result.data.results.next_page_url;
-            this.prev_page_url = result.data.results.prev_page_url;
-            console.log(this.next_page_url);
-            console.log(this.prev_page_url);
-          });
-      }
-    },
-    created() {
-      this.getPosts('http://127.0.0.1:8000/api/posts');
-    },
+    }
   }
 </script>
 
