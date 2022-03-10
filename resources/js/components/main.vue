@@ -31,10 +31,8 @@ import Axios from "axios";
         prev_page_url: null,
       }
     },
-    created() {
-      this.getPosts('http://127.0.0.1:8000/api/posts')
-    },
 
+    
     methods: {
       changePage(vs) {
         let url = this[vs];
@@ -53,7 +51,10 @@ import Axios from "axios";
             console.log(this.prev_page_url);
           });
       }
-    }
+    },
+    created() {
+      this.getPosts('http://127.0.0.1:8000/api/posts');
+    },
   }
 </script>
 
