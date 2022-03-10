@@ -38,7 +38,7 @@ import Axios from "axios";
         let url = this[vs];
         console.log(url)
         if(url) {
-          this.getProducts(url);
+          this.getPosts(url);
         }
       },
       getPosts(url){

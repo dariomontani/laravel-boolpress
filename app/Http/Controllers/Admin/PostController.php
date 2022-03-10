@@ -129,7 +129,9 @@ class PostController extends Controller
             Storage::delete($post->image);
 
             $img_path = Storage::put('uploads', $data['image']);
+            // dd($img_path);
             $post->image = $img_path;
+            // dd($post->image);
         }
 
         if ($data['title'] != $post->title) {
@@ -143,7 +145,9 @@ class PostController extends Controller
             $post->category_id = $data['category_id'];
         }
 
-        $post->update($data);
+        $post->update();
+        // dd($post->image);
+
 
         if (!empty($data['tags'])) {
             $post->tags()->sync($data['tags']);
