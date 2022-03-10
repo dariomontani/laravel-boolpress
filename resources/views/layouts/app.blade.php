@@ -58,7 +58,7 @@
                         <li>
                             <div class="menu menu-right" aria-labelledby="navbar">
                                 <a class="item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                             document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -76,8 +76,8 @@
             </div>
         </div>
     </nav>
-    <div id="app">
 
+    <div id="app">
         <main class="py-4">
             @yield('content')
         </main>

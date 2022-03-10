@@ -43,7 +43,7 @@ import Axios from "axios";
           this.getProducts(url);
         }
       },
-      getProducts(url){
+      getPosts(url){
         Axios.get(url).then(
           (result) => {
             this.posts = result.data.results.posts;
