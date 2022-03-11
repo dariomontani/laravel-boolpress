@@ -8,6 +8,7 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <form action="">
                     <select name="orderbycolumn" id="orderbycolumn" v-model="form.orderbycolumn">
                         <option value="name">name</option>
                         <option value="price">price</option>
@@ -18,7 +19,8 @@
                         <option value="asc">asc</option>
                         <option value="desc">desc</option>
                     </select>
-                    <input type="submit" value="">
+                    <input type="submit" value="Search" @click.prevent="searchPosts">
+                    </form>
                 </div>
             </div>
             <Main :cards="cards" @changePage="changePage($event)"></Main>
@@ -67,8 +69,16 @@ export default {
                 this.cards.posts = result.data.results.posts;
                 this.cards.next_page_url = result.data.results.next_page_url;
                 this.cards.prev_page_url = result.data.results.prev_page_url;
-                console.log(this.next_page_url);
-                console.log(this.prev_page_url);
+            });
+        },
+        searchPosts() {
+            console.log('search', this.form.orderbycolumn, this.form.orderbysort);
+            const url = 'http://127.0.0.1:8000/api/posts/search';
+            Axios.get(url, {params: this.form}).then(
+            (result) => {
+                this.cards.posts = result.data.results.posts;
+                this.cards.next_page_url = result.data.results.next_page_url;
+                this.cards.prev_page_url = result.data.results.prev_page_url;
             });
         }
     }

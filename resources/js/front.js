@@ -14,6 +14,7 @@ import Products from './pages/Products';
 import Product from './pages/Product';
 import VueRouter from 'vue-router';
 import Vue from 'vue';
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
@@ -32,11 +33,11 @@ const router = new VueRouter({
       name: 'products',
       component: Products
     },
-    // {
-    //   path: '/product',
-    //   name: 'product',
-    //   component: Product
-    // },
+    {
+      path: '/product',
+      name: 'product',
+      component: Product
+    },
   ]
 })
 
